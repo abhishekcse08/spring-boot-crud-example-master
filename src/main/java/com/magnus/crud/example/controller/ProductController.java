@@ -3,6 +3,9 @@ package com.magnus.crud.example.controller;
 import com.magnus.crud.example.entity.Product;
 import com.magnus.crud.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +15,9 @@ public class ProductController {
 
     @Autowired
     private ProductService service;
+
+  //  @Value("${spring.welcome}")
+   // private String name;
 
     @PostMapping("/addProduct")
     public Product addProduct(@RequestBody Product product) {
@@ -25,12 +31,21 @@ public class ProductController {
 
     @GetMapping("/products")
     public List<Product> findAllProducts() {
+       // System.out.println(name);
         return service.getProducts();
     }
 
-    @GetMapping("/productById/{id}")
+   /* @GetMapping("/productById/{id}")
     public Product findProductById(@PathVariable int id) {
         return service.getProductById(id);
+    }*/
+
+    @GetMapping("/productById/{id}")
+    public ResponseEntity<Product> customQuery(@PathVariable int id) {
+        System.out.println("Hello Data");
+        //Product p = service.findByProdId(id).
+      return   new ResponseEntity<>(service.getProductById(id), HttpStatus.OK);
+       // return service.findByProdId(id);
     }
 
     @GetMapping("/product/{name}")

@@ -1,6 +1,7 @@
 package com.magnus.crud.example.service;
 
 import com.magnus.crud.example.entity.Product;
+import com.magnus.crud.example.exception.ResourceNotFoundException;
 import com.magnus.crud.example.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class ProductService {
     }
 
     public Product getProductById(int id) {
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Resource Not Found exception"));
     }
 
     public Product getProductByName(String name) {
@@ -46,5 +47,10 @@ public class ProductService {
         return repository.save(existingProduct);
     }
 
+    public Product findByProdId(int  id) {
+        Product prod = repository.findByProdId(id);
+
+        return prod;
+    }
 
 }
