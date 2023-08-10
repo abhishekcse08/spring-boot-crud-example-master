@@ -1,6 +1,7 @@
 package com.magnus.crud.example.controller;
 
 import com.magnus.crud.example.entity.Product;
+import com.magnus.crud.example.exception.MyCustomException;
 import com.magnus.crud.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,11 +22,16 @@ public class ProductController {
 
     @PostMapping("/addProduct")
     public Product addProduct(@RequestBody Product product) {
+        if(product.getQuantity()==1){
+            throw new MyCustomException("This is not correc=t data","This sis s s");
+        }
         return service.saveProduct(product);
     }
 
     @PostMapping("/addProducts")
     public List<Product> addProducts(@RequestBody List<Product> products) {
+
+
         return service.saveProducts(products);
     }
 
@@ -41,7 +47,7 @@ public class ProductController {
     }*/
 
     @GetMapping("/productById/{id}")
-    public ResponseEntity<Product> customQuery(@PathVariable int id) {
+    public ResponseEntity<Product> customQuery(@PathVariable int id) throws Exception {
         System.out.println("Hello Data");
         //Product p = service.findByProdId(id).
       return   new ResponseEntity<>(service.getProductById(id), HttpStatus.OK);

@@ -1,6 +1,7 @@
 package com.magnus.crud.example.service;
 
 import com.magnus.crud.example.entity.Product;
+import com.magnus.crud.example.exception.MyCustomException;
 import com.magnus.crud.example.exception.ResourceNotFoundException;
 import com.magnus.crud.example.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,10 @@ public class ProductService {
         return repository.findAll();
     }
 
-    public Product getProductById(int id) {
-        return repository.findById(id).orElseThrow(()->new ResourceNotFoundException("Resource Not Found exception"));
+    public Product getProductById(int id) throws Exception {
+        //return repository.findById(id).orElseThrow(null);
+        return repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("There is no data present"));
+   //return  repository.findById(id).orElseThrow(()->new Exception("DSADADADAD"));
     }
 
     public Product getProductByName(String name) {

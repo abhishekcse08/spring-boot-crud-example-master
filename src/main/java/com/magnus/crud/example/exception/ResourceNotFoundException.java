@@ -1,10 +1,11 @@
 package com.magnus.crud.example.exception;
 
-public class ResourceNotFoundException extends RuntimeException {
+public class ResourceNotFoundException extends RuntimeException{
 
-  private static final long serialVersionUID = 1L;
+    public ResourceNotFoundException(String message){
 
-  public ResourceNotFoundException(String msg) {
-    super(msg);
-  }
+        super(message);
+    }
+
+
 }
